@@ -31,8 +31,11 @@ s: a string describing his path
 
 Input Format
 The first line contains an integer , the number of steps in Gary's hike. 
-The second line contains a single string , of  characters that describe his path.
+The second line contains a single string of characters that describe his path.
+
 Constraints
+2 < 2 < 1M
+steps are only U or D
 
 Output Format
 Print a single integer that denotes the number of valleys Gary walked through during his hike.
@@ -48,3 +51,51 @@ _/\      _
     \/\/
 He enters and leaves one valley.
 """
+def parse_outside_input(self):
+    '''
+    Read input
+    :return: n, ar
+    '''
+    n = int(input())
+    s = input().split()
+    return n, s
+
+class ValleyCounter:
+
+    def __init__(self, n, s):
+        '''
+        
+        :param n: number of steps (int)
+        :param s: the path (U up or D down) (str)
+        '''
+        self.n = n
+        self.s = s
+
+    def convert_path(self):
+        '''
+        Have to know what the previous step was at all times
+        a valley is all consecutive steps below sea level
+        let's also set sea level to 0, U to + and D to -
+        '''
+        level = 0
+        convert = {'U':1, 'D':-1}
+        translated = [convert.get(x) for x in self.s]
+        print(translated)
+        valley = False
+        valley_count = 0
+
+        for step in translated:
+            level += step
+            print(f'level is now: {level}')
+            if level != 0:
+                if (level < 0): #below sea level
+                    valley = True
+                elif (level > 0): #above sea level
+                    valley = False
+            else:
+                if valley == True:
+                    valley_count += 1
+                else:
+                    continue
+        print(f'valley_count is now: {valley_count}')
+        return valley_count
