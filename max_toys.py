@@ -8,6 +8,7 @@ def maximumToys(prices:list, k:int) -> int:
     :return: length of the list corresponding to the toys Mark can buy (int)
     """
     chosen = []
+    total = 0
     for item in sorted(prices):
         if (total + item) <= k:
             total += item
