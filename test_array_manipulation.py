@@ -16,6 +16,7 @@ class TestExample(unittest2.TestCase):
             a = q[0] - 1
             b = q[1] - 1
             k = q[2]
+
             for i in range(a,b+1):
                 arr[i] += k
         print(arr)
