@@ -69,5 +69,11 @@ class TestHeight(unittest2.TestCase):
         assert tree.root.left.val == 2
         assert height(tree.root) == 3
 
+    def test_branching2(self):
+        tree = BinarySearchTree()
+        for val in [int(x) for x in "3 1 7 5 4".split(" ")]:
+            tree.create(val)
+        assert height(tree.root) == 3
+
 if __name__ == '__main__':
     unittest2.main()

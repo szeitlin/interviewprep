@@ -50,31 +50,35 @@ def height(root:Node) -> int:
     :param root: root node info
     :return: tree height (int)
     """
+    current = root.left
     depth = 0
-    maxdepth = []
+    maxdepth = [0]
+    seen = [root.val]
 
-    current = root
-    print(' current node is {}'.format(current))
+    #do the left side first, then the right
 
-    print(' current.left is {}'.format(current.left))
-
-    while True:
-        if (current.left is None) and (current.right is None):
-            maxdepth.append(0)
-            return max(maxdepth)
-        else:
-            if current.left is not None:
-                depth +=1
-                current = current.left
-            elif current.right is not None:
-                depth += 1
-                current = current.right
+    while current is not None:
+        if current.val not in seen:
+            seen.append(current.val)
+            depth +=1
             maxdepth.append(depth)
+            current = current.left
+        else:
+            current = None
+    print(' maxdepth left so far is {}'.format(maxdepth))
 
-            print(' maxdepth so far is {}'.format(maxdepth))
-            print(' current.right is {}'.format(current.right))
+    current = root.right
+    depth = 0
 
-    print(maxdepth)
+    while current is not None:
+        if current.val not in seen:
+            seen.append(current.val)
+            depth +=1
+            maxdepth.append(depth)
+            current = current.right
+        else:
+            current = None
+    print(' maxdepth right so far is {}'.format(maxdepth))
 
     return max(maxdepth)
 
