@@ -53,18 +53,26 @@ def height(root:Node) -> int:
     current = root.left
     depth = 0
     maxdepth = [0]
-    seen = [root.val]
+    #track the value and whether it has a branchpoint or not (bool)
+    seen = dict()
 
     #do the left side first, then the right
 
     while current is not None:
         if current.val not in seen:
-            seen.append(current.val)
+            if (current.left is not None) and (current.right is not None):
+                seen.update({current.val:True})
+            else:
+                seen.update({current.val:False})
             depth +=1
             maxdepth.append(depth)
-            current = current.left
+            if current.left is not None:
+                current = current.left
+            elif current.right is not None:
+                current = current.right
         else:
             current = None
+
     print(' maxdepth left so far is {}'.format(maxdepth))
 
     current = root.right
@@ -72,10 +80,16 @@ def height(root:Node) -> int:
 
     while current is not None:
         if current.val not in seen:
-            seen.append(current.val)
+            if (current.left is not None) and (current.right is not None):
+                seen.update({current.val: True})
+            else:
+                seen.update({current.val: False})
             depth +=1
             maxdepth.append(depth)
-            current = current.right
+            if current.right is not None:
+                current = current.right
+            elif current.left is not None:
+                current = current.left
         else:
             current = None
     print(' maxdepth right so far is {}'.format(maxdepth))
