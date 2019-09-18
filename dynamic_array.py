@@ -36,9 +36,11 @@ def dynamicArray(n:int, queries:list):
             listindex = x^lastAnswer % n
             seqList[listindex].append(y)
         elif querytype == 2:
-            listindex = x ^ lastAnswer % n
-            lastAnswer = y % (len(seqList[listindex]))
+            listindex = (x^lastAnswer)%n
+            listsize = len(seqList[listindex])
+            lastAnswer = seqList[listindex][y % listsize]
             results.append(lastAnswer)
-    print(results)
-    return results
+    for item in results:
+        print(item)
+
 

@@ -21,7 +21,10 @@ class TestExample(unittest2.TestCase):
         querycount = split_input[1]
         assert querycount == 5
 
-        queries = [split_input[2:][x:x+3] for x in range(0,querycount)]
+        querylist = split_input[2:]
+        print("querylist {}".format(querylist))
+        queries = [querylist[x:x+3] for x in range(0,len(querylist),3)]
+        print("queries {}".format(queries))
 
         seqList = [[] for i in range(n)]
         lastAnswer = 0
@@ -33,11 +36,15 @@ class TestExample(unittest2.TestCase):
             y = sublist[2]
             if querytype == 1:
                 listindex = (x^lastAnswer)%n
+                print("listindex {}".format(listindex))
                 seqList[listindex].append(y)
                 print(seqList)
             elif querytype == 2:
                 listindex = (x^lastAnswer)%n
-                lastAnswer = seqList[listindex][y % (len(seqList))]
+                print("listindex {}".format(listindex))
+                listsize = len(seqList[listindex])
+                print("listsize {}".format(listsize))
+                lastAnswer = seqList[listindex][y % listsize]
                 print(lastAnswer)
                 results.append(lastAnswer)
         print(results)
