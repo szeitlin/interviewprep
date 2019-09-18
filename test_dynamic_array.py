@@ -68,8 +68,6 @@ class TestTestCases(unittest2.TestCase):
         result = dynamicArray(n, queries)
         print("result\n")
         print(result)
-        #todo: have to flatten this
-        #flat_result = [j for i in result for j in i]
 
         with open('dynamic_array_expected_output.txt', 'r') as output:
             raw_output = output.readlines()
