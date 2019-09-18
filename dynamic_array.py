@@ -31,10 +31,11 @@ def dynamicArray(n:int, queries:list):
         x = sublist[1]
         y = sublist[2]
         if querytype == 1:
-            listindex = x^lastAnswer % n
+            listindex = (x^lastAnswer)%n
             try:
                 seqList[listindex].append(y)
             except IndexError:
+                print("IndexError!")
                 continue
         elif querytype == 2:
             listindex = (x^lastAnswer)%n
@@ -43,10 +44,12 @@ def dynamicArray(n:int, queries:list):
                 lastAnswer = seqList[listindex][y % listsize]
                 results.append(lastAnswer)
             except ZeroDivisionError:
+                print("ZeroDivisionError!")
                 continue
 
     for item in results:
         print(item)
+    return results
 
 if __name__ == '__main__':
 

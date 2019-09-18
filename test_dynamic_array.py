@@ -64,6 +64,7 @@ class TestTestCases(unittest2.TestCase):
         for line in raw[1:]:
             queries.append([int(x) for x in line.split()])
 
+        print(queries[0:10])
         result = dynamicArray(n, queries)
         print("result\n")
         print(result)
