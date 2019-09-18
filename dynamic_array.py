@@ -12,8 +12,6 @@ there are 2 types of queries to be performed on the list of lists
 
 #!/bin/python3
 
-import os
-
 
 #
 # Complete the 'dynamicArray' function below.
@@ -34,13 +32,38 @@ def dynamicArray(n:int, queries:list):
         y = sublist[2]
         if querytype == 1:
             listindex = x^lastAnswer % n
-            seqList[listindex].append(y)
+            try:
+                seqList[listindex].append(y)
+            except IndexError:
+                continue
         elif querytype == 2:
             listindex = (x^lastAnswer)%n
             listsize = len(seqList[listindex])
-            lastAnswer = seqList[listindex][y % listsize]
-            results.append(lastAnswer)
+            try:
+                lastAnswer = seqList[listindex][y % listsize]
+                results.append(lastAnswer)
+            except ZeroDivisionError:
+                continue
+
     for item in results:
         print(item)
+
+if __name__ == '__main__':
+
+    with open('dynamic_array_test_cases.txt', 'r') as f:
+        raw = f.readlines()
+
+    firstline = [int(x) for x in raw[0].split()]
+    n = firstline[0]
+    querycount = firstline[1] #this doesn't get used
+    queries = []
+
+    for line in raw[1:]:
+        queries.append([int(x) for x in line.split()])
+
+    result = dynamicArray(n, queries)
+
+    print('\n'.join(map(str, result)))
+    print('\n')
 
 

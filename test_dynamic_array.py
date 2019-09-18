@@ -1,7 +1,7 @@
 import unittest2
 from dynamic_array import dynamicArray
 
-class TestExample(unittest2.TestCase):
+class TestSample(unittest2.TestCase):
 
     def test_example1(self):
         input = """ 2 5
@@ -18,7 +18,7 @@ class TestExample(unittest2.TestCase):
         #followed by Q, the number of queries
         n = split_input[0]
         assert n == 2
-        querycount = split_input[1]
+        querycount = split_input[1] #don't actually need this
         assert querycount == 5
 
         querylist = split_input[2:]
@@ -49,6 +49,35 @@ class TestExample(unittest2.TestCase):
                 results.append(lastAnswer)
         print(results)
         assert results == [7,3]
+
+class TestTestCases(unittest2.TestCase):
+
+    def test_testcase(self):
+        with open('dynamic_array_test_cases.txt', 'r') as f:
+            raw = f.readlines()
+
+        firstline = [int(x) for x in raw[0].split()]
+        n = firstline[0]
+        querycount = firstline[1] #not using this
+        queries = []
+
+        for line in raw[1:]:
+            queries.append([int(x) for x in line.split()])
+
+        result = dynamicArray(n, queries)
+        print("result\n")
+        print(result)
+        #todo: have to flatten this
+        #flat_result = [j for i in result for j in i]
+
+        with open('dynamic_array_expected_output.txt', 'r') as output:
+            raw_output = output.readlines()
+
+        formatted = [int(x.rstrip()) for x in raw_output]
+        print("formatted\n")
+        print(formatted)
+        assert result == formatted
+
 
 if __name__ == '__main__':
     unittest2.main()
