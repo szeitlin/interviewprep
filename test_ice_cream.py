@@ -17,5 +17,14 @@ class TestInput(unittest2.TestCase):
         result2 = whatFlavors(cost2, money2)
         assert result2 == "1 2"
 
+    def test_harder_example(self):
+        """
+        this one requires a restart
+        """
+        money = 4
+        cost = [1,2,2]
+        result = whatFlavors(cost, money)
+        assert result == "2 3"
+
 if __name__ == '__main__':
     unittest2.main()

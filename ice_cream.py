@@ -45,26 +45,35 @@ def whatFlavors(cost, money):
 
     id_list = []
 
-    for i, amount in enumerate(cost):
-        print("i, amount is {}, {}".format(i, amount))
-        if amount > money:
-            continue
-        else:
-            if (money - amount) >= 0:
-                id_list.append(i)
-                if (money - amount) == 0:
-                    break
-                else:
-                    money -= amount
-                    print("remaining money amount is {}".format(money))
+    # want to loop through and restart if first item needs to be excluded
+    #import ipdb; ipdb.set_trace()
 
+    for i in range(len(cost)):
+        if len(id_list)==2:
+            if sum([cost[id_list[0]],cost[id_list[1]]]) == money:
+                break
+        else:
+            cost = cost[i:]
+            wallet = money
+            id_list = []
+            for i, amount in enumerate(cost):
+                print("amount is {}".format(amount))
+                if (wallet - amount) >= 0:
+                    id_list.append(i)
+                    if (wallet - amount) == 0:
+                        break
+                    else:
+                        wallet -= amount
+                        print("remaining money is {}".format(wallet))
+                else:
+                    if len(id_list)==2:
+                        break
 
     result = " ".join([str((x+1)) for x in id_list]) #convert to 1-indexed at the end
     print(result)
     return result
 
-    #have to convert to 1-index at the end
-    #have to print as string at the end
+
 
 
 if __name__ == '__main__':
