@@ -43,7 +43,7 @@ def whatFlavors(cost, money):
     #need to get combinations and subtract from the total
     #have to do it by index
 
-    id_list = []
+    first, second = None, None
 
     # want to loop through and restart if first item needs to be excluded
     #import ipdb; ipdb.set_trace()
@@ -53,39 +53,41 @@ def whatFlavors(cost, money):
 
     for i in indices:
         try:
-            if sum([cost[id_list[0]],cost[id_list[1]]])==money:
-                print("id_list is {}".format(id_list))
+            if sum([cost[first],cost[second]])==money:
+                print("id_list is {}".format([first, second]))
                 break
 
-        except IndexError:
+        except TypeError:
             #cost = cost[i:] #this didn't work because of indexing
+            first, second = None, None
             indexed_amounts = list(zip(indices, cost))
             indexed_amounts = indexed_amounts[i:]
             print("indexed_amounts is {}".format(indexed_amounts))
             wallet = money
             print("wallet is {}".format(wallet))
 
+    #2nd version, try with just limiting it to two items
             for index, amount in indexed_amounts:
                 print("current amount is {}".format(amount))
-                if (wallet - amount) == 0:
-                    id_list.append(index)
-                    print("this looks right!")
-                    break
+                if amount >= money:
+                    continue
                 else:
-                    if amount >= money:
-                        continue
+                    wallet -= amount
+                    print("wallet remaining is {}".format(wallet))
+                    if first is None:
+                        first = index
+                        print("first {}".format(first))
+                    elif (wallet == 0) and (second is None):
+                        second = index
+                        print("now we have {}".format([first, second]))
+                        break
                     else:
-                        wallet -= amount
-                        print("wallet remaining is {}".format(wallet))
-                        if wallet < 0:
-                            print("no money left! breaking this loop!")
-                            id_list = []
-                            break
-                        else:
-                            id_list.append(index)
-                            print(id_list)
+                        first, second = None, None
 
-    result = " ".join([str((x+1)) for x in id_list]) #convert to 1-indexed at the end
+
+
+
+    result = " ".join([str((x+1)) for x in [first, second]]) #convert to 1-indexed at the end
     print(result)
 
     return result
