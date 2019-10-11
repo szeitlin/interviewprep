@@ -48,29 +48,46 @@ def whatFlavors(cost, money):
     # want to loop through and restart if first item needs to be excluded
     #import ipdb; ipdb.set_trace()
 
-    for i in range(len(cost)):
-        if len(id_list)==2:
-            if sum([cost[id_list[0]],cost[id_list[1]]]) == money:
+    indices = list(range(len(cost)))
+    print("indices is {}".format(indices))
+
+    for i in indices:
+        try:
+            if sum([cost[id_list[0]],cost[id_list[1]]])==money:
+                print("id_list is {}".format(id_list))
                 break
-        else:
-            cost = cost[i:]
+
+        except IndexError:
+            #cost = cost[i:] #this didn't work because of indexing
+            indexed_amounts = list(zip(indices, cost))
+            indexed_amounts = indexed_amounts[i:]
+            print("indexed_amounts is {}".format(indexed_amounts))
             wallet = money
-            id_list = []
-            for i, amount in enumerate(cost):
-                print("amount is {}".format(amount))
-                if (wallet - amount) >= 0:
-                    id_list.append(i)
-                    if (wallet - amount) == 0:
-                        break
+            print("wallet is {}".format(wallet))
+
+            for index, amount in indexed_amounts:
+                print("current amount is {}".format(amount))
+                if (wallet - amount) == 0:
+                    id_list.append(index)
+                    print("this looks right!")
+                    break
+                else:
+                    if amount >= money:
+                        continue
                     else:
                         wallet -= amount
-                        print("remaining money is {}".format(wallet))
-                else:
-                    if len(id_list)==2:
-                        break
+                        print("wallet remaining is {}".format(wallet))
+                        if wallet < 0:
+                            print("no money left! breaking this loop!")
+                            id_list = []
+                            break
+                        else:
+                            id_list.append(index)
+                            print(id_list)
 
     result = " ".join([str((x+1)) for x in id_list]) #convert to 1-indexed at the end
     print(result)
+
     return result
 
 

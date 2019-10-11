@@ -26,5 +26,17 @@ class TestInput(unittest2.TestCase):
         result = whatFlavors(cost, money)
         assert result == "2 3"
 
+    def test_sample_test2a(self):
+        money = 8
+        cost = [4, 3, 2, 5, 7]
+        result = whatFlavors(cost, money)
+        assert result == "2, 4"
+
+    def test_sample_test2b(self):
+        money = 12
+        cost = [7, 2, 5, 4, 11]
+        result = whatFlavors(cost, money)
+        assert result == "1 3"
+
 if __name__ == '__main__':
     unittest2.main()
