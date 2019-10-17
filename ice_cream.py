@@ -23,12 +23,7 @@ Two ice creams having unique IDs  and  may have the same cost.
 There will always be a unique solution.
 """
 #!/bin/python3
-
-import math
-import os
-import random
-import re
-import sys
+from itertools import combinations
 
 # Complete the whatFlavors function below.
 def whatFlavors(cost, money):
@@ -40,59 +35,28 @@ def whatFlavors(cost, money):
     :param money: int
     :return: string with space-separated integer IDs 
     """
-    #need to get combinations and subtract from the total
-    #have to do it by index
-
-    first, second = None, None
-
-    # want to loop through and restart if first item needs to be excluded
-    #import ipdb; ipdb.set_trace()
-
-    indices = list(range(len(cost)))
+    indices = range(len(cost))
     print("indices is {}".format(indices))
 
-    for i in indices:
+
+    indexed_amounts = zip(indices, cost)
+    #print("indexed_amounts is {}".format(indexed_amounts))
+    pairs = combinations(indexed_amounts, 2)
+    wallet = money
+    print("wallet is {}".format(wallet))
+
+    #3rd version, try with just limiting it to two items and do combinations
+    while pairs:
         try:
-            if sum([cost[first],cost[second]])==money:
-                print("id_list is {}".format([first, second]))
-                break
-
-        except TypeError:
-            #cost = cost[i:] #this didn't work because of indexing
-            first, second = None, None
-            indexed_amounts = list(zip(indices, cost))
-            indexed_amounts = indexed_amounts[i:]
-            print("indexed_amounts is {}".format(indexed_amounts))
-            wallet = money
-            print("wallet is {}".format(wallet))
-
-    #2nd version, try with just limiting it to two items
-            for index, amount in indexed_amounts:
-                print("current amount is {}".format(amount))
-                if amount >= money:
-                    continue
-                else:
-                    wallet -= amount
-                    print("wallet remaining is {}".format(wallet))
-                    if first is None:
-                        first = index
-                        print("first {}".format(first))
-                    elif (wallet == 0) and (second is None):
-                        second = index
-                        print("now we have {}".format([first, second]))
-                        break
-                    else:
-                        first, second = None, None
-
-
-
-
-    result = " ".join([str((x+1)) for x in [first, second]]) #convert to 1-indexed at the end
-    print(result)
-
-    return result
-
-
+            #import ipdb; ipdb.set_trace()
+            first, second = next(pairs)
+            if first[1] + second[1] == money:
+                winner = (first[0], second[0])
+                result = " ".join([str((x + 1)) for x in winner])
+                print(result)
+                return result
+        except Exception:
+            break
 
 
 if __name__ == '__main__':
