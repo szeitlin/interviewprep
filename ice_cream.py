@@ -46,26 +46,28 @@ def whatFlavors(cost, money):
     # print(list(pairs))
     wallet = money
     print("wallet is {}".format(wallet))
+    result = None
 
    #4th version, here's how to get the pairs of indices, and short-circuit
    #the loop step if you don't need to check the whole thing:
-    import ipdb; ipdb.set_trace()
-    for i in range(len(cost)):
-        for j in (range(i + 1, len(cost))):
-            pair = (i, j)
-            print(cost[i], cost[j])
-            if cost[i] > money:
-                print("too much! {}".format(cost[i]))
-                continue
-            else:
-                try:
-                    if cost[i] + cost[j] == money:
-                        result = " ".join([str((x + 1)) for x in pair])
-                        print(result)
-                        return result
-                except IndexError as e:
-                    print(e)
-                    print(pair)
+    #import ipdb; ipdb.set_trace()
+    for i,j in zip(range(len(cost)), (range(1, len(cost)))):
+        pair = (i, j)
+        print(cost[i], cost[j])
+        if cost[i] > money:
+            print("too much! {}".format(cost[i]))
+            continue
+        else:
+            try:
+                if cost[i] + cost[j] == money:
+                    result = " ".join([str((x + 1)) for x in pair])
+                    print(result)
+                    break
+            except IndexError as e:
+                print(e)
+                print(pair)
+
+    return result
 
     #3rd version, try with just limiting it to two items and do combinations
     # while pairs:
